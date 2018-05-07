@@ -21,7 +21,8 @@ class Store extends Component {
                 {this.state.isOpen && (
                     <Modal onClose={this.close}
                            heading={this.state.selectedBank ? 'Изменить банк' : 'Добавить банк'}>
-                        <BankForm showError={this.state.error} onSave={this.handleAdd} onCancel={this.close} selectedBank={this.state.selectedBank}
+                        <BankForm showError={this.state.error} onSave={this.handleAdd} onCancel={this.close}
+                                  selectedBank={this.state.selectedBank}
                                   onDelete={this.handleDelete}/>
                     </Modal>
                 )}
@@ -31,7 +32,7 @@ class Store extends Component {
     }
 
     isUnique = (bank) => {
-        const foundBank = this.state.bankList.find(curBank => curBank.name === bank.name || curBank.code === bank.code)
+        const foundBank = this.state.bankList.find(curBank => (curBank.name === bank.name || curBank.code === bank.code || curBank.corAccount === bank.corAccount) && curBank.id !== bank.id)
         return !foundBank
     }
 
@@ -68,7 +69,7 @@ class Store extends Component {
     }
 
     open = (selectedBank = null) => {
-        this.setState({isOpen: true, selectedBank});
+        this.setState({isOpen: true, selectedBank, error: null});
 
     }
     close = () => this.setState({isOpen: false});

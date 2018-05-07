@@ -5,7 +5,7 @@ import uuid4 from 'uuid/v4';
 import Flag from '@atlaskit/flag'
 
 class BankForm extends Component {
-    state = {name: '', code: '', id: null};
+    state = {name: '', code: '', id: null, corAccount: '', address: ''};
 
     static getDerivedStateFromProps(nextProps, prevState) {
         return nextProps.selectedBank ? nextProps.selectedBank : null
@@ -17,9 +17,13 @@ class BankForm extends Component {
                 <form onSubmit={this.handleSubmit}>
                     {this.props.showError && <Flag appearance="error" title="БИК или наименование не уникальны" />}
                     <FieldText required label="Наименование банка" type="text" name="name" value={this.state.name}
-                               onChange={(event) => this.setState({name: event.target.value})}/>
+                               onChange={this.handleInputChange}/>
                     <FieldText required label="БИК" type="text" name="code" value={this.state.code}
-                               onChange={(event) => this.setState({code: event.target.value})}/>
+                               onChange={this.handleInputChange}/>
+                    <FieldText required label="Корсчет" type="text" name="corAccount" value={this.state.corAccount}
+                               onChange={this.handleInputChange}/>
+                    <FieldText required label="Адрес" type="text" name="address" value={this.state.address}
+                               onChange={this.handleInputChange}/>
                     <div style={{height: 30}}/>
                     <ButtonGroup>
                         <Button type="submit" appearance="primary">
@@ -45,6 +49,15 @@ class BankForm extends Component {
         this.props.onSave(bank);
         console.log();
         event.preventDefault();
+    }
+
+    handleInputChange = (event) => {
+        const value =  event.target.value;
+        const name = event.target.name;
+
+        this.setState({
+            [name]: value
+        });
     }
 
 

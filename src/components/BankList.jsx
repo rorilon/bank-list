@@ -4,7 +4,12 @@ import FieldText from '@atlaskit/field-text';
 import Button from '@atlaskit/button';
 
 class BankList extends Component {
-    head = {cells: [{key: 'name', content: 'Название'}, {key: 'code', content: 'БИК'}]};
+    head = {
+        cells: [{key: 'name', content: 'Название'}, {key: 'code', content: 'БИК'}, {
+            key: 'corAccount',
+            content: 'Корсчет'
+        }, {key: 'address', content: 'Адрес'}]
+    };
     state = {queryString: ''};
 
     render() {
@@ -20,7 +25,13 @@ class BankList extends Component {
 
     transformListToRows = (bankList) => bankList.map(bank => ({
         key: bank.code,
-        cells: [{key: 'name', content: <a onClick={() => this.props.open(bank)}>{bank.name}</a>}, {key: 'code', content: <a onClick={() => this.props.open(bank)}>{bank.code}</a>}]
+        cells: [{key: 'name', content: <a onClick={() => this.props.open(bank)}>{bank.name}</a>}, {
+            key: 'code',
+            content: <a onClick={() => this.props.open(bank)}>{bank.code}</a>
+        }, {
+            key: 'corAccount',
+            content: <a onClick={() => this.props.open(bank)}>{bank.corAccount}</a>
+        }, {key: 'address', content: <a onClick={() => this.props.open(bank)}>{bank.address}</a>}]
     }))
 
     filterList = () => {
